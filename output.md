@@ -1,4 +1,7 @@
-# Sed pharetra etiam convallis himenaeos curabitur auctor rhoncus dolor placerat hendrerit mattis faucibus pulvinar eros phasellus laoreet eu leo nullam
+foo: bar
+---
+
+# Sed pharetra etiam convallis himenaeos curabitur auctor rhoncus dolor placerat nullam
 
 Interdum cras porta  fames sociosqu consectetur urna metus, malesuada platea
 diam litora sit quam taciti non, auctor dictum est eget facilisis risus.
