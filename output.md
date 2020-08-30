@@ -1,3 +1,4 @@
+--
 foo: bar
 ---
 
@@ -47,3 +48,4 @@ phasellus semper a, curae vehicula etiam porta praesent tortor dis aliquet,
 egestas justo turpis nullam cras urna sociis aenean. Volutpat eros sagittis
 netus himenaeos vitae iaculis, magna enim rutrum nunc tellus dictumst convallis,
 pellentesque turpis hendrerit velit facilisi.
+
