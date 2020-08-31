@@ -10,7 +10,7 @@ Laoreet nibh velit duis scelerisque ipsum massa mi ac inceptos nam rutrum, magni
 
 | Colour | Favourite  |
 |--------|------------|
-| Red | yes  |
-| Blue                           | not really |
+| Red    | yes        |
+| Blue   | not really |
 
 foo

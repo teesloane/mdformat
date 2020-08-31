@@ -46,30 +46,35 @@ proc handleTable(currLine: string): void =
   ## Formats a markdown table.
   ## Reads lines until end of table, then aligns cells with whitespace.
   var table = @[currLine]
-  # var matrix: seq[seq[string]]
+  var output = newSeq[string]()
   for line in inputF.lines:
     let t = determineLineType(line.string)
     prevLine = line
+
     if t == "table":
       table.add(line)
+
     else: # a new line comes in that is not a table
       prevLine = line # don't forget we need to process this later.
       var matrixTable = table.map(x => x.split('|'))
-      echo matrixTable
-      var cols = newSeq[int]()
-      echo "copl lenglkajdf", cols.len
-
+      echo matrixTable.len
+      var cols = newSeq[int](matrixTable[0].len)
       for i, row in matrixTable:
         for j, cell in row:
-          # echo cols.len, " ", j
           if cols.len <= j:
             cols.add(cell.len)
-          when cell.len > cols[j]:
-            cols[j] = cell.len # STUCK: FIXME: can't evaluate at compile time
+          if cell.len > cols[j]:
+            cols[j] = cell.len
+      # duplicate looping here, but oh well.
+      for row in matrixTable:
+        var rowOutput = ""
+        for j, cell in row:
+          rowOutput.add(cell.align(cols[j], ' '))
+        outputF.writeLine(rowOutput)
 
-        # var maxCellLength = row.longestStringinSeq()
-        # echo "max cell length is ", maxCellLength
       echo cols
+      echo output
+
       break
   # this only runs if the table is the very last thing in the file.
   # echo "table is: ", table
