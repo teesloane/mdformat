@@ -9,6 +9,10 @@ from table import nil
 # Generally, the program is a bit complicated because we reads the files line by
 # line rather than into memory. I suppose this is more effecient, but we have
 # to do some fiddling to keep track of the current line and where we iterate on inputF
+#
+# TODO: code samples
+# TODO: hr line breaks (change determineLineType)
+# TODO: inline html
 
 let inputF = open("testfile.md", fmRead)        # re-open file for iteration after prepping.
 var outputF = open("testfile.tmp.md", fmWrite)  # re-open file for reading.
