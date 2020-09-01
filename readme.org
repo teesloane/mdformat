@@ -1,0 +1,32 @@
+MdFormat is a command line tool for the opinionated formatting of markdown.
+
+* Features
+- Front matter processing
+- Table formatting
+- Line breaking
+* TODO Usage
+* Limitations
+** Tables
+Sometimes tables can get a bit unruly and hard to read in markdown. ~MdFormat~
+will format your tables so that each column is the same min-width. ~MdFormat~
+expects that tables have a pipe at the beginning and end of each row, otherwise
+they will not be formatted.
+
+Good:
+
+#+BEGIN_SRC markdown
+| Colour | Favourite  |                           | Colour   | Favourite                    |
+|--------|----------------------------|           |----------|------------------------------|
+| Red              | yes        |            =>   | Red      | yes                          |
+| Blue   | not really                   |         | Blue     | not really                   |
+
+#+END_SRC
+
+Bad:
+
+#+BEGIN_SRC markdown
+| Colour | Favourite  |
+|--------|----------------------------|
+| Red              | yes        |             => Will not properly format.
+| Blue   | not really                   |
+#+END_SRC
