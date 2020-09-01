@@ -9,8 +9,8 @@ Interdum cras porta  fames sociosqu consectetur urna metus, malesuada platea dia
 Laoreet nibh velit duis scelerisque ipsum massa mi ac inceptos nam rutrum, magnis nostra sed viverra bibendum augue curabitur ridiculus lacus. Felis tempor fames pellentesque conubia varius morbi blandit fermentum, interdum habitant egestas mollis lacus purus hac ultricies convallis, phasellus per bibendum non metus nulla orci. Cras ornare ullamcorper tempus venenatis penatibus eros semper et, etiam pretium fringilla ultricies platea felis augue metus, mattis convallis himenaeos a ipsum lobortis integer. Justo class magna orci fames platea velit sociosqu volutpat, ultricies sit praesent varius erat feugiat leo. Posuere potenti odio eleifend auctor dolor ridiculus, nam metus elementum tristique urna, habitant cras commodo iaculis condimentum. Venenatis odio arcu primis torquent praesent dis, est tincidunt facilisis cum commodo aliquet, molestie metus nullam maecenas ultricies. Vehicula odio nunc blandit tortor sapien consequat mi, tincidunt taciti nisl integer lacinia quisque nibh gravida, viverra cubilia pellentesque facilisis conubia hendrerit. Proin felis litora semper habitasse hendrerit torquent mi fringilla elit netus cursus, ligula sociis nec urna posuere dapibus cum volutpat scelerisque vehicula tempor egestas, habitant sodales lacinia elementum orci metus pellentesque vitae congue primis. Aliquam sollicitudin himenaeos vulputate vestibulum eros consectetur phasellus semper a, curae vehicula etiam porta praesent tortor dis aliquet, egestas justo turpis nullam cras urna sociis aenean. Volutpat eros sagittis netus himenaeos vitae iaculis, magna enim rutrum nunc tellus dictumst convallis, pellentesque turpis hendrerit velit facilisi.
 
 | Colour | Favourite  |
-|--------|------------|
-| Red    | yes        |
-| Blue   | not really |
+|--------|----------------------------|
+| Red              | yes        |
+| Blue   | not really                   |
 
 foo

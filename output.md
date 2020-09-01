@@ -49,9 +49,9 @@ egestas justo turpis nullam cras urna sociis aenean. Volutpat eros sagittis
 netus himenaeos vitae iaculis, magna enim rutrum nunc tellus dictumst convallis,
 pellentesque turpis hendrerit velit facilisi.
 
- Colour  Favourite  
---------------------
- Red     yes        
- Blue    not really 
+| Colour  | Favourite                   |
+|---------|-----------------------------|
+| Red     | yes                         |
+| Blue    | not really                  |
 
 foo

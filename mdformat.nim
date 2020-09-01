@@ -1,4 +1,5 @@
 import std/wordwrap
+import nre
 import strutils
 import algorithm
 import sequtils, sugar
@@ -10,7 +11,6 @@ var outputF = open("output.md", fmWrite)
 # Utils ================================
 
 proc stringLenCompare(x, y: string): int =
-  # echo "x len and y len:" , x.len, " | ", y.len
   if x.len < y.len: -1
   elif x.len == y.len: 0
   else: 1
@@ -56,24 +56,41 @@ proc handleTable(currLine: string): void =
 
     else: # a new line comes in that is not a table
       prevLine = line # don't forget we need to process this later.
+      ## All of this also has to happen outside of the else up one level
+      ## if it's the case that the table is the last thing in the file.
+      ## HACKS ABOUND
       var matrixTable = table.map(x => x.split('|'))
-      echo matrixTable.len
       var cols = newSeq[int](matrixTable[0].len)
+      # here we find the larges string length in a cell for each column.
       for i, row in matrixTable:
         for j, cell in row:
+          let strip_cell = cell.strip()
+          echo "cell : ", cell, " stripped: ", strip_cell , "|"
           if cols.len <= j:
-            cols.add(cell.len)
-          if cell.len > cols[j]:
-            cols[j] = cell.len
-      # duplicate looping here, but oh well.
+            cols.add(strip_cell.len)
+          if strip_cell.len > cols[j]:
+            cols[j] = strip_cell.len
+      # duplicate looping here, but oh well; now we reconstruct the strings.
       for row in matrixTable:
         var rowOutput = ""
-        for j, cell in row:
-          rowOutput.add(cell.align(cols[j], ' '))
-        outputF.writeLine(rowOutput)
+        for j, cell_str in row:
+          var cell = cell_str.strip()
+          # check if we are operating on a "divider" line between th and td.
+          if cell.contains(nre.re("^(-*)\1*$")) : # PERF: regexes should be defined outside of loops
+            echo "".contains(nre.re("^(-*)\1*$"))
+            cell = cell.alignLeft(cols[j], '-')
+            if cell.len > 0: cell = "-" & cell
+            rowOutput.add(cell)
+          else:
+            cell = cell.alignLeft(cols[j], ' ')
+            rowOutput.add(cell.indent(1))
+          rowOutput.add("|") # re-add table pipes (altho this adds an extra at the end.)
 
-      echo cols
-      echo output
+        rowOutput = rowOutput.strip(leading = false, chars = {'|'})
+        rowOutput = rowOutput.strip(leading = false, chars = {'|'})
+        rowOutput.add("|")
+        # result = result.add("|")
+        outputF.writeLine(rowOutput)
 
       break
   # this only runs if the table is the very last thing in the file.
@@ -148,7 +165,6 @@ proc processLine(line : string) : void =
 proc main() : void =
   handleFrontMatter(inputF)
   for line in inputF.lines:
-    echo "in main loop:", line
     # check if the prev line has anything in it, and process it
     if prevLine != "__empty__": # not ideal. Can't nil check strings.
       processLine(prevLine)
