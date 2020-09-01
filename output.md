@@ -1,8 +1,10 @@
---
-foo: bar
----
 
 # Sed pharetra etiam convallis himenaeos curabitur auctor rhoncus dolor placerat nullam
+
+| Colour   | Favourite                    |
+|----------|------------------------------|
+| Red      | yes                          |
+| Blue     | not really                   |
 
 Interdum cras porta  fames sociosqu consectetur urna metus, malesuada platea
 diam litora sit quam taciti non, auctor dictum est eget facilisis risus.
@@ -49,9 +51,10 @@ egestas justo turpis nullam cras urna sociis aenean. Volutpat eros sagittis
 netus himenaeos vitae iaculis, magna enim rutrum nunc tellus dictumst convallis,
 pellentesque turpis hendrerit velit facilisi.
 
-| Colour  | Favourite                   |
-|---------|-----------------------------|
-| Red     | yes                         |
-| Blue    | not really                  |
+| Colour   | Favourite                    |
+|----------|------------------------------|
+| Red      | yes                          |
+| Blue     | not really                   |
 
-foo
+
+

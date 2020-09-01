@@ -1,8 +1,13 @@
---
-foo: bar
+---
+foo: Imperdiet amet dictum euismod fusce urna venenatis elementum tristique massa congue himenaeos sit etiam quis erat vestibulum dictumst facilisi hac
 ---
 
 # Sed pharetra etiam convallis himenaeos curabitur auctor rhoncus dolor placerat nullam
+
+| Colour | Favourite  |
+|--------|----------------------------|
+| Red              | yes        |
+| Blue   | not really                   |
 
 Interdum cras porta  fames sociosqu consectetur urna metus, malesuada platea diam litora sit quam taciti non, auctor dictum est eget facilisis risus. Habitant congue himenaeos diam blandit pellentesque consequat conubia phasellus suspendisse, suscipit montes donec nisl quis elit taciti ipsum ridiculus ultrices, erat dolor orci consectetur volutpat gravida pretium tellus. Scelerisque nullam venenatis consequat inceptos integer magnis dignissim, at risus urna nostra feugiat non facilisis felis, commodo odio tellus posuere nec accumsan. Ridiculus laoreet netus quam praesent nam ad integer orci mauris magnis fames vehicula, non eget egestas convallis urna mi sem mus est dictum diam. Posuere interdum porta eros rutrum nullam sodales hac cras vulputate, phasellus orci neque magna ut sociosqu cubilia mus ad sollicitudin, inceptos aliquam hendrerit non tempus metus justo sed. Rhoncus class rutrum nibh, nisi eu nec, netus suscipit. Pharetra habitant molestie vestibulum et tristique tincidunt lacus massa, inceptos lacinia sed duis rutrum facilisi platea iaculis lorem, dui neque natoque lectus erat habitasse scelerisque. Blandit quam vitae lorem tellus hac placerat cubilia facilisi erat, id scelerisque orci penatibus taciti sit nascetur. Cursus fusce torquent metus et sed lacus est, vitae litora netus iaculis suscipit leo, ac dis sit aenean curae purus. Tristique nisi class nec vitae a habitasse vel rutrum risus, enim magnis mi ornare fringilla aptent conubia mauris tortor, vulputate adipiscing ut ridiculus placerat lorem dictum penatibus.
 
@@ -12,5 +17,3 @@ Laoreet nibh velit duis scelerisque ipsum massa mi ac inceptos nam rutrum, magni
 |--------|----------------------------|
 | Red              | yes        |
 | Blue   | not really                   |
-
-foo
