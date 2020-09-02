@@ -11,12 +11,17 @@ from table import nil
 # line rather than into memory. I suppose this is more effecient, but we have
 # to do some fiddling to keep track of the current line and where we iterate on inputF
 #
-# TODO: code samples
+# Features:
+# TODO: code samples (make sure they don't line break)
 # TODO: hr line breaks (change determineLineType)
 # TODO: inline html - don't format at all.
+#
+# Usability Things:
+# TODO: Add cli tooling + ability to choose to view diff of fmt, or overwrite file.
+# TODO: Add ability to read multiple files and operate on them
 
-let inputF = open("testfile.md", fmRead)        # re-open file for iteration after prepping.
-var outputF = open("testfile.tmp.md", fmWrite)  # re-open file for reading.
+let inputF = open("tests/testfile.md", fmRead)        # re-open file for iteration after prepping.
+var outputF = open("tests/testfile.tmp.md", fmWrite)  # re-open file for reading.
 var overwrite = false
 
 # HACK: due to how reading a file line by line works, we need to store the "last
@@ -110,7 +115,8 @@ proc main() : void =
       processLine(prevLine)
       prevLine = "__empty__"
     processLine(line.string)
-  if overwrite:
-    os.moveFile("./testfile.tmp.md", "./testfile.md")
+
+  # if overwrite:
+    # os.moveFile("./testfile.tmp.md", "./testfile.md")
 
 main()
