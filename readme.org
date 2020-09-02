@@ -17,7 +17,7 @@ Good:
 #+BEGIN_SRC markdown
 | Colour | Favourite  |                           | Colour   | Favourite                    |
 |--------|----------------------------|           |----------|------------------------------|
-| Red              | yes        |            =>   | Red      | yes                          |
+| Red              | yes        |            =>  | Red      | yes                          |
 | Blue   | not really                   |         | Blue     | not really                   |
 
 #+END_SRC
@@ -25,8 +25,8 @@ Good:
 Bad:
 
 #+BEGIN_SRC markdown
-| Colour | Favourite  |
-|--------|----------------------------|
-| Red              | yes        |             => Will not properly format.
-| Blue   | not really                   |
+ Colour | Favourite
+--------|----------------------------
+ Red              | yes                       =>   Will not properly format.
+ Blue   | not really
 #+END_SRC
