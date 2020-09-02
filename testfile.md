@@ -31,19 +31,5 @@ Tables get auto formatted - all cells have a min width based on largest cell in 
 Code samples should not be broken:
 
 ```nim
-var prevLine: string = "__empty__" # HACK: string's can't be nil. Need a better way of checking that the previous line isn't being used...
-
-proc determineLineType(line: string): string =
-  if line.len == 0:
-    "empty"
-  elif line[0] == '#':
-    "heading"
-  elif line[0] == '|':
-    "table"
-  elif line.len > 3 and line[0..2] == "---":
-    "frontmatter" # FIXME: should be "rule" or "hr"
-  elif line.len > 3 and line[0..2] == "+++":
-    "frontmatter"
-  else:
-    "default"
+echo "Class nascetur aptent sem tellus consectetur habitant eu turpis quisque bibendum dapibus lacinia enim accumsan faucibus suspendisse semper commodo facilisis"
 ```

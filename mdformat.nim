@@ -5,19 +5,25 @@ from table import nil
 # This program formats markdown in the following ways:
 # - breaks lines over N chars (optional)
 # - align table columns by minimum char space.
+# - ...?
 #
-# Generally, the program is a bit complicated because we reads the files line by
+# Generally, the program is more complicated than expected because we reads the files line by
 # line rather than into memory. I suppose this is more effecient, but we have
 # to do some fiddling to keep track of the current line and where we iterate on inputF
 #
 # TODO: code samples
 # TODO: hr line breaks (change determineLineType)
-# TODO: inline html
+# TODO: inline html - don't format at all.
 
 let inputF = open("testfile.md", fmRead)        # re-open file for iteration after prepping.
 var outputF = open("testfile.tmp.md", fmWrite)  # re-open file for reading.
 var overwrite = false
 
+# HACK: due to how reading a file line by line works, we need to store the "last
+# line" of an iteration at times.
+# ex: when processing a table we loop through readLine input until the next line
+# is not a line of type "table". this new line, however, needs to be processed,
+# and so we store it.
 var prevLine: string = "__empty__" # HACK: string's can't be nil. Need a better way of checking that the previous line isn't being used...
 
 proc determineLineType(line: string): string =
@@ -41,7 +47,8 @@ proc handleTable(currLine: string): void =
   ## - cells with a `|` in them will break the formatting.
   ## - tables must start and end with pipes (`|`)
   var tableRows = @[currLine]
-  # fns in fns... I wonder if there's a more idiomatic way to do this.
+  # fns inside fns... I wonder if there's a more idiomatic way to do this.
+  # FIXME: is there an equivalent to (let [temp-fn (fn [x] ...))]) ?
   proc handleWrite(rows: seq[string]): void =
     var res = table.format(rows)
     for l in res:
