@@ -1,7 +1,9 @@
+from os import nil
 import std/wordwrap
 import strutils
-# from os import nil
+from util import nil
 from table import nil
+import parseopt
 
 
 # This program formats markdown in the following ways:
@@ -12,16 +14,15 @@ from table import nil
 # Generally, the program is more complicated than expected because we reads the files line by
 # line rather than into memory. I suppose this is more effecient, but we have
 # to do some fiddling to keep track of the current line and where we iterate on inputF
-#
-# Features:
-# TODO: inline html - don't format at all.
 
 # Usability Things:
 # TODO: Add cli tooling + ability to choose to view diff of fmt, or overwrite file.
 # TODO: Add ability to read multiple files and operate on them
 
-let inputF = open("tests/testfile.md", fmRead)        # re-open file for iteration after prepping.
-var outputF = open("tests/testfile.tmp.md", fmWrite)  # re-open file for reading.
+# let inputF = open("tests/testfile.md", fmRead)       
+var inputF: File
+var outputF = open("./.tmp.md", fmWrite)  # re-open file for reading.
+# var outputF: File
 # var overwrite = false
 
 # HACK: due to how reading a file line by line works, we need to store the "last
@@ -40,15 +41,22 @@ proc determineLineType(line: string): string =
     "table"
   elif line.len > 2 and line[0..2] == "---":
     "frontmatter" 
-  elif line.len > 2 and line[0..2] == "+++": # TODO: test this.
+  elif line.len > 2 and line[0..2] == "+++": 
     "frontmatter" 
   elif line.len > 2 and line.strip(true)[0..2] == "```":
     "codeblock" 
-  # TODO: # HTML: use regex to check if line starts OR ens with an html tag.
-  # regex for checking if line begins with tags, and (optionally) has content + end tag: ^<\s*[a-z][^>]*>((.*?)(<\s*\/[a-z]*>))? (<< javascript regex)
-  # elif line.len > 0: # HTML - the line either starts with
+  elif line.len > 0 and util.isHtml(line):
+    "html"
   else:
     "default"
+
+proc saveFile(): void = 
+  ## convert the temp output to the input and overwrite it.
+  echo "------------------------------------"
+  echo os.getFileInfo(inputF)
+  # os.moveFile
+
+
 
 proc handleTable(currLine: string): void =
   ## Formats a markdown table.
@@ -58,7 +66,7 @@ proc handleTable(currLine: string): void =
   ## - tables must start and end with pipes (`|`)
   var tableRows = @[currLine]
   # fns inside fns... I wonder if there's a more idiomatic way to do this.
-  # FIXME: is there an equivalent to (let [temp-fn (fn [x] ...))]) ?
+  # NOTE: is there an equivalent to (let [temp-fn (fn [x] ...))]) in nim?
   proc handleWrite(rows: seq[string]): void =
     var res = table.format(rows)
     for l in res:
@@ -79,15 +87,13 @@ proc handleTable(currLine: string): void =
       handleWrite(tableRows)
 
 proc handleBlockElement(currentLine: string, blockType: string) : void =
-  # for handliner start/finish blocks, like front-matter or codeblocks.
+  # for handling start/finish blocks, like front-matter or codeblocks. (ie. anything with delimiters.)
   var buffer = @[currentLine]
   for line in inputF.lines:
     let t = determineLineType(line)
     if t != blockType:
       buffer.add(line)
     else:
-      if blockType != "frontmatter":
-        prevLine = line # in all cases but frontmatter we need to set the prevLine global state
       buffer.add(line)
       for line in buffer:
         outputF.writeLine(line)
@@ -96,7 +102,6 @@ proc handleBlockElement(currentLine: string, blockType: string) : void =
       buffer.add(line)
       for line in buffer:
         outputF.writeLine(line)
-
 
 proc processLine(line : string) : void =
   let t = determineLineType(line)
@@ -109,14 +114,12 @@ proc processLine(line : string) : void =
       handleTable(line)
     of "codeblock":
       handleBlockElement(line, "codeblock")
+    of "html":
+      outputF.writeLine(line)
     else:
       outputF.writeLine(wrapWords(line, maxLineWidth=80, splitLongWords=true))
 
-
-proc main() : void =
-  # Reads a file, parsing frontmatter and then the rest of the file line by line.
-
-  # front matter.
+proc process() : void =
   var firstLine = ""        
   for line in inputF.lines:
     firstLine = line
@@ -131,9 +134,78 @@ proc main() : void =
       prevLine = "__empty__"
     processLine(line.string)
 
-  # CLI OS ops: (overwrite, etc)
-  # TODO: try https://github.com/docopt/docopt.nim
-  # if overwrite:
-    # os.moveFile("./testfile.tmp.md", "./testfile.md")
+
+
+## -- CLI ---------------------------------------------------------------------
+## 
+const VERSION = "0.0.1"
+const HELP = """
+mdformat - markdown formatter
+
+usage: mdformat (commands) 
+  mdformat [file | directory | pattern]
+
+options:
+  -h --help                          Show this screen.
+  -v --version                       Show version.
+  -w --write                         Write formatting changes to files.
+  -t --no-tables                     Do not process tables.
+
+example:
+  mdformat docs/**/*.md --write      
+
+"""
+
+proc main() : void =
+
+# var filename: string
+  var p = initOptParser("")
+  var command = ""
+  var writeEnabled = false
+  var commandType = ""
+
+  for kind, key, val in p.getopt():
+    case kind
+    of cmdArgument:
+      if os.fileExists(key):
+        commandType = "file"
+      elif os.dirExists(key):
+        commandType = "directory"
+      else:
+        commandType = "pattern"
+      command = key
+
+    # parse options - do this first to turn on writeEnabled
+    of cmdLongOption, cmdShortOption:
+      case key
+      of "help", "h": echo HELP
+      of "version", "v": echo VERSION
+      of "write", "w": writeEnabled = true
+    of cmdEnd: assert(false) # cannot happen
+
+  if command == "":
+    echo HELP
+
+  echo "command type : ", commandType
+  echo command & "*.md"
+
+  case commandType
+  of "file": 
+    inputF = open(command)
+    process()
+  of "directory":
+    for file in os.walkPattern(command & "/*.md"):
+      # close and reopen the temp file.
+      # TODO Leaving off.
+      outputF.close()
+      outputF = open("./.tmp.md", fmWrite)  # re-open file for reading.
+      inputF = open(file) # writes to tmp file
+      saveFile()
+      process() # re-open file for iteration after prepping.
+  # TODO of "pattern":
+  else:
+    echo ""
+
+
 
 main()

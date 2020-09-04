@@ -2,6 +2,9 @@ import sequtils, sugar
 import strutils
 import nre
 
+# checks if a line is all dashes (for table heading/body separators)
+let tableDividerRE = nre.re("^(-*)\1*$")
+
 proc format*(table: seq[string]): seq[string] =
   var matrixTable = table.map(x => x.split('|'))
   var cols        = newSeq[int](matrixTable[0].len)
@@ -28,8 +31,7 @@ proc format*(table: seq[string]): seq[string] =
     for j, cell_str in row:
       var cell = cell_str.strip()
       # check if we are operating on a "divider" line between th and td.
-      if cell.contains(nre.re("^(-*)\1*$")) : # PERF: regexes should be defined outside of loops
-        # echo "---------------------" , "-----\|----------".contains(nre.re("^(-*)\1*$"))
+      if cell.contains(tableDividerRE) :
         cell = cell.alignLeft(cols[j], '-')
         if cell.len > 0: cell = "-" & cell
         rowOutput.add(cell)
