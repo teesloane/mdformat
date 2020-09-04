@@ -13,9 +13,18 @@ fringilla
 * Varius ornare ante natoque nisl neque vulputate
   * Convallis parturient arcu velit rutrum turpis sodales
 
+# inline html
+
+<div>
+  <span>Sodales in fames nullam erat dis maecenas scelerisque feugiat magnis
+platea dictum dui aptent a pulvinar mauris aliquam ut tortor</span>
+  >
+</div>
+
 # Long paragraphs
 
-Long paragraphs are by default broken at 80 chars (customizable)
+Long paragraphs are by default broken at 80 chars (TODO: make optional /
+customizable)
 
 Laoreet nibh velit duis scelerisque ipsum massa mi ac inceptos nam rutrum,
 magnis nostra sed viverra bibendum augue curabitur ridiculus lacus. Felis tempor
@@ -50,7 +59,7 @@ column.
 | Red      | yes                          |
 | Blue     | not really                   |
 
-# TODO: Code samples
+# Code samples
 
 Code samples should not be broken:
 

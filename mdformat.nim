@@ -44,6 +44,9 @@ proc determineLineType(line: string): string =
     "frontmatter" 
   elif line.len > 2 and line.strip(true)[0..2] == "```":
     "codeblock" 
+  # TODO: # HTML: use regex to check if line starts OR ens with an html tag.
+  # regex for checking if line begins with tags, and (optionally) has content + end tag: ^<\s*[a-z][^>]*>((.*?)(<\s*\/[a-z]*>))? (<< javascript regex)
+  # elif line.len > 0: # HTML - the line either starts with
   else:
     "default"
 
@@ -129,6 +132,7 @@ proc main() : void =
     processLine(line.string)
 
   # CLI OS ops: (overwrite, etc)
+  # TODO: try https://github.com/docopt/docopt.nim
   # if overwrite:
     # os.moveFile("./testfile.tmp.md", "./testfile.md")
 
