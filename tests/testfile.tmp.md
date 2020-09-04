@@ -55,7 +55,5 @@ column.
 Code samples should not be broken:
 
 ```nim
-echo "Class nascetur aptent sem tellus consectetur habitant eu turpis quisque
-bibendum dapibus lacinia enim accumsan faucibus suspendisse semper commodo
-facilisis"
+echo "Class nascetur aptent sem tellus consectetur habitant eu turpis quisque bibendum dapibus lacinia enim accumsan faucibus suspendisse semper commodo facilisis"
 ```

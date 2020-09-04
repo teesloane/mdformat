@@ -1,6 +1,8 @@
 import std/wordwrap
-from os import nil
+import strutils
+# from os import nil
 from table import nil
+
 
 # This program formats markdown in the following ways:
 # - breaks lines over N chars (optional)
@@ -12,17 +14,15 @@ from table import nil
 # to do some fiddling to keep track of the current line and where we iterate on inputF
 #
 # Features:
-# TODO: code samples (make sure they don't line break)
-# TODO: hr line breaks (change determineLineType)
 # TODO: inline html - don't format at all.
-#
+
 # Usability Things:
 # TODO: Add cli tooling + ability to choose to view diff of fmt, or overwrite file.
 # TODO: Add ability to read multiple files and operate on them
 
 let inputF = open("tests/testfile.md", fmRead)        # re-open file for iteration after prepping.
 var outputF = open("tests/testfile.tmp.md", fmWrite)  # re-open file for reading.
-var overwrite = false
+# var overwrite = false
 
 # HACK: due to how reading a file line by line works, we need to store the "last
 # line" of an iteration at times.
@@ -38,10 +38,12 @@ proc determineLineType(line: string): string =
     "heading"
   elif line[0] == '|':
     "table"
-  elif line.len > 3 and line[0..2] == "---":
-    "frontmatter" # FIXME: should be "rule" or "hr"
-  elif line.len > 3 and line[0..2] == "+++":
-    "frontmatter"
+  elif line.len > 2 and line[0..2] == "---":
+    "frontmatter" 
+  elif line.len > 2 and line[0..2] == "+++": # TODO: test this.
+    "frontmatter" 
+  elif line.len > 2 and line.strip(true)[0..2] == "```":
+    "codeblock" 
   else:
     "default"
 
@@ -73,6 +75,26 @@ proc handleTable(currLine: string): void =
     if endOfFile(inputF):
       handleWrite(tableRows)
 
+proc handleBlockElement(currentLine: string, blockType: string) : void =
+  # for handliner start/finish blocks, like front-matter or codeblocks.
+  var buffer = @[currentLine]
+  for line in inputF.lines:
+    let t = determineLineType(line)
+    if t != blockType:
+      buffer.add(line)
+    else:
+      if blockType != "frontmatter":
+        prevLine = line # in all cases but frontmatter we need to set the prevLine global state
+      buffer.add(line)
+      for line in buffer:
+        outputF.writeLine(line)
+      break
+    if endOfFile(inputF):
+      buffer.add(line)
+      for line in buffer:
+        outputF.writeLine(line)
+
+
 proc processLine(line : string) : void =
   let t = determineLineType(line)
   case t:
@@ -82,33 +104,23 @@ proc processLine(line : string) : void =
       outputF.writeLine(line)
     of "table":
       handleTable(line)
+    of "codeblock":
+      handleBlockElement(line, "codeblock")
     else:
       outputF.writeLine(wrapWords(line, maxLineWidth=80, splitLongWords=true))
 
-proc handleFrontMatter(inFile: File) : void =
-  ## reads the first line of a file, deterimines if there is frontmatter
-  ## and then appropriately handles parsing/formatting until front matter is done.
-  var is_capturing = false
-  var firstLine = ""
-  for line in inFile.lines:
-    if firstLine.len == 0: # get the first line and store in a var
-      firstLine = line
-    if firstLine != "---": # if the first line isn't front matter, get outta here
-      processLine(line)
-      return
-
-    let isFM = line[0..2] == "---" # check if each successive line is frontmatter.
-    if isFM and is_capturing == false: # if first line is fm
-      is_capturing = true
-      outputF.writeLine(line)
-    elif isFM and is_capturing:
-      outputF.writeLine(line)
-      break
-    if not isFM and is_capturing:
-      outputF.writeLine(line)
 
 proc main() : void =
-  handleFrontMatter(inputF)
+  # Reads a file, parsing frontmatter and then the rest of the file line by line.
+
+  # front matter.
+  var firstLine = ""        
+  for line in inputF.lines:
+    firstLine = line
+    break
+  handleBlockElement(firstLine, "frontmatter")
+
+  # The rest of the file.
   for line in inputF.lines:
     # check if the prev line has anything in it, and process it
     if prevLine != "__empty__": # HACK: "__empty__" is not ideal. Can't nil check strings tho.
@@ -116,6 +128,7 @@ proc main() : void =
       prevLine = "__empty__"
     processLine(line.string)
 
+  # CLI OS ops: (overwrite, etc)
   # if overwrite:
     # os.moveFile("./testfile.tmp.md", "./testfile.md")
 
