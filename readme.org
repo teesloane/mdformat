@@ -1,16 +1,9 @@
-MdFormat is a command line tool for the opinionated formatting of markdown.
+MdFormat is a command line tool for simple markdown formatting.
 
-* Features
-- Front matter processing
-- Table formatting
-- Line breaking
-* TODO Usage
-* Limitations
-** Tables
-Sometimes tables can get a bit unruly and hard to read in markdown. ~MdFormat~
-will format your tables so that each column is the same min-width. ~MdFormat~
-expects that tables have a pipe at the beginning and end of each row, otherwise
-they will not be formatted.
+*** TODO Usage
+*** Limitations
+
+- Tables are expected to begin and end with pipes.
 
 Good:
 
