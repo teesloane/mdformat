@@ -1,6 +1,31 @@
-MdFormat is a command line tool for simple markdown formatting.
+#+BEGIN_QUOTE
+CLI markdown formatter.
+#+END_QUOTE
 
-*** TODO Usage
+- Formats tables
+- Customizable line breaks
+- Can process markdown with front matter
+
+*** Usage
+
+#+BEGIN_SRC sh
+mdformat - markdown formatter
+
+Usage: mdformat [file | directory]
+
+Options:                   Default:    Intent:
+  -w --write               false       Write formatting changes to files.
+  -t --no-tables           false       Do not process tables.
+  -n --line-break          80          Break lines at `n` char line length.
+  -d --no-line-break       false       Disable line breaking entirely.
+  -r --no-recursion        false       Do not format directories recursively. 
+  -h --help                            Show this screen.
+  -v --version                         Show version.
+
+Example:
+  mdformat docs/posts --write -n=120
+#+END_SRC
+
 *** Limitations
 
 - Tables are expected to begin and end with pipes.

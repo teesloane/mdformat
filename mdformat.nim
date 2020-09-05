@@ -158,8 +158,7 @@ const HELP = """
 
 mdformat - markdown formatter
 
-Usage: mdformat (commands) 
-  mdformat [file | directory (default: recursive)]
+Usage: mdformat [file | directory]
 
 Options:                   Default:    Intent:
   -w --write               false       Write formatting changes to files.
@@ -171,7 +170,7 @@ Options:                   Default:    Intent:
   -v --version                         Show version.
 
 Example:
-  mdformat docs/posts --write -n=70
+  mdformat docs/posts --write -n=120
 """
 
 proc main() : void =
