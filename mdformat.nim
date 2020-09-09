@@ -169,8 +169,9 @@ Options:                   Default:    Intent:
   -h --help                            Show this screen.
   -v --version                         Show version.
 
-Example:
-  mdformat docs/posts --write -n=120
+Examples:
+  $ mdformat docs/posts --write -n=120
+  $ mdformat my_file.md --no-tables --write
 """
 
 proc main() : void =

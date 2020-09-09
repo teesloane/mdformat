@@ -16,14 +16,15 @@ Usage: mdformat [file | directory]
 Options:                   Default:    Intent:
   -w --write               false       Write formatting changes to files.
   -t --no-tables           false       Do not process tables.
-  -n --line-break          80          Break lines at `n` char line length.
+  -n --line-break          n=80        Break lines at `n` char line length.
   -d --no-line-break       false       Disable line breaking entirely.
-  -r --no-recursion        false       Do not format directories recursively. 
+  -r --no-recursion        false       Do not format directories recursively.
   -h --help                            Show this screen.
   -v --version                         Show version.
 
-Example:
-  mdformat docs/posts --write -n=120
+Examples:
+  $ mdformat docs/posts --write -n=120
+  $ mdformat my_file.md --no-tables --write
 #+END_SRC
 
 *** Limitations
@@ -48,3 +49,6 @@ Bad:
  Red              | yes                       =>   Will not properly format.
  Blue   | not really
 #+END_SRC
+
+*** Development
+Compile a local version of mdformat with ~make build~.
