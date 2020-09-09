@@ -1,7 +1,6 @@
 from os import nil
 import std/wordwrap
 import strutils
-import parseUtils
 import parseopt
 from util import nil
 from table import nil
@@ -194,7 +193,9 @@ proc main() : void =
     of cmdLongOption, cmdShortOption:
       case key
       of "help", "h": echo HELP
-      of "version", "v": echo VERSION
+      of "version", "v":
+        echo VERSION
+        quit()
       of "no-tables", "t": cliArgs.tables = false
       of "write", "w": cliArgs.write = true
       of "no-line-break", "d": cliArgs.noLineBreak = true
